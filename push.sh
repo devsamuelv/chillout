@@ -1,0 +1,1 @@
+docker push devsamuelv/chillout:latest

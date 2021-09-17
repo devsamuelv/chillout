@@ -1,0 +1,6 @@
+[submodule "youtubedl-java"]
+	path = youtubedl-java
+	url = https://github.com/sapher/youtubedl-java
+[submodule "src/main/java/chillout/youtubedl-java"]
+	path = src/main/java/chillout/youtubedl-java
+	url = https://github.com/sapher/youtubedl-java

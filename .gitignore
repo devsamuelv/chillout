@@ -1,0 +1,3 @@
+target/
+runDev.sh
+.env

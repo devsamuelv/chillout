@@ -1,0 +1,16 @@
+version: "2"
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  chillout:
+    container_name: runner
+    env_file: .env
+    image: adoptopenjdk/openjdk8
+    restart: always
+    volumes:
+      - .:/usr/chillout
+    working_dir: /usr/chillout/target
+    command: java -Dtoken=${TOKEN} -jar chillout-1.0-SNAPSHOT.jar
