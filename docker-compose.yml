@@ -12,5 +12,5 @@ services:
     restart: always
     volumes:
       - .:/usr/chillout
-    working_dir: /usr/chillout/target
-    command: java -Dtoken=${TOKEN} -jar chillout-1.0-SNAPSHOT.jar
+    working_dir: /usr/chillout
+    command: java -Dtoken=${TOKEN} -jar target/chillout-1.0-SNAPSHOT.jar
