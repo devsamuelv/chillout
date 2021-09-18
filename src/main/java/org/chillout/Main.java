@@ -11,10 +11,13 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.Activity.ActivityType;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -39,8 +42,10 @@ public class Main extends ListenerAdapter {
     }
 
     public static void buildbot(String token) throws IllegalArgumentException, LoginException, RateLimitedException {
-        bot = JDABuilder.createDefault(token)
-                .build();
+        bot = JDABuilder.createDefault(token).build();
+
+        bot.getPresence().setPresence(OnlineStatus.ONLINE,
+                Activity.of(ActivityType.CUSTOM_STATUS, "Don't worry youtube can't take me down"), false);
 
         bot.addEventListener(new Main());
     }
@@ -106,7 +111,8 @@ public class Main extends ListenerAdapter {
                     firstTrack = playlist.getTracks().get(0);
                 }
 
-                channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")").queue();
+                channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist "
+                        + playlist.getName() + ")").queue();
 
                 play(channel.getGuild(), musicManager, firstTrack, userId);
             }
@@ -124,8 +130,6 @@ public class Main extends ListenerAdapter {
     }
 
     private void leaveChannel(final TextChannel channel) {
-        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-
         for (VoiceChannel voiceChannel : channel.getGuild().getVoiceChannels()) {
             for (Member member : voiceChannel.getMembers()) {
                 if (member.getId().equals("806351851091132426") || member.getId().equals("683866713858768926")) {
