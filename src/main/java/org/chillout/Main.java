@@ -1,6 +1,8 @@
 package org.chillout;
 
+import org.chillout.handler.GuildMusicManager;
 import org.chillout.handler.MusicUtils;
+import org.chillout.handler.TrackScheduler;
 import org.chillout.listeners.volume;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
@@ -8,6 +10,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Activity.ActivityType;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -41,6 +44,15 @@ public class Main extends ListenerAdapter {
             buildbot(System.getProperty("token"));
         } catch (Exception err) {
             err.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
+        if (event.getMember().getId() == "683866713858768926") {
+            GuildMusicManager manager = MusicUtils.getGuildAudioPlayer(event.getGuild());
+
+            manager.scheduler.clear();
         }
     }
 
