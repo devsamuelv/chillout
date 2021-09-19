@@ -1,3 +1,4 @@
 target/
 runDev.sh
 .env
+*.log
