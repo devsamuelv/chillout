@@ -7,11 +7,6 @@ public class volume {
   public static void setVolume(TextChannel channel, String message) {
     int vol = Integer.parseInt(message);
 
-    if (vol > 1000) {
-      channel.sendMessage("your a mad man no.").queue();
-      return;
-    }
-
     MusicUtils.volume(channel, vol);
 
     channel.sendMessage("Setting volume to " + message).queue();
