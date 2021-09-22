@@ -2,7 +2,6 @@ package org.chillout;
 
 import org.chillout.handler.GuildMusicManager;
 import org.chillout.handler.MusicUtils;
-import org.chillout.handler.TrackScheduler;
 import org.chillout.listeners.volume;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
