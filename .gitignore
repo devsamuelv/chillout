@@ -1,4 +1,7 @@
 target/
 runDev.sh
 .env
+.idea
+.settings
+.vscode
 *.log
