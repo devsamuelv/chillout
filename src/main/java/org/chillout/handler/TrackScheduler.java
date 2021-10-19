@@ -1,13 +1,11 @@
 package org.chillout.handler;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
-import net.dv8tion.jda.api.managers.AudioManager;
 
+import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -15,12 +13,15 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
 
+    private final HashMap<String, String> loopList;
+
     /**
      * @param audioPlayer The audio player this scheduler uses
      */
     public TrackScheduler(AudioPlayer audioPlayer) {
         this.player = audioPlayer;
         this.queue = new LinkedBlockingQueue<>();
+        this.loopList = new HashMap<>();
     }
 
     /**
@@ -42,6 +43,20 @@ public class TrackScheduler extends AudioEventAdapter {
     public void clear() {
         queue.clear();
     }
+
+    /**
+     * this will check to see if this channel has a song set to loop
+     * 
+     * @param id
+     * @return song id
+     */
+    public String isChannelLooping(String id) {
+        String song = this.loopList.get(id);
+
+        return song;
+    }
+
+    // public void setLoop(AudioTrack )
 
     /**
      * Start the next track, stopping the current one if it is playing.

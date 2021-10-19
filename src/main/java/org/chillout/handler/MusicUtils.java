@@ -2,6 +2,9 @@ package org.chillout.handler;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import org.chillout.Constants;
+
+import java.util.Date;
+
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
@@ -13,6 +16,8 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 public class MusicUtils {
+  public static VoiceScheduler voiceScheduler = new VoiceScheduler();
+
   public static synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
     long guildId = Long.parseLong(guild.getId());
     GuildMusicManager musicManager = Constants.musicManagers.get(guildId);
@@ -35,7 +40,7 @@ public class MusicUtils {
       public void trackLoaded(AudioTrack track) {
         channel.sendMessage("Adding to queue `" + track.getInfo().title + "`").queue();
 
-        play(channel.getGuild(), musicManager, track, userId);
+        play(channel.getGuild(), channel.getId(), musicManager, track, userId);
       }
 
       @Override
@@ -50,7 +55,7 @@ public class MusicUtils {
             "Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")")
             .queue();
 
-        play(channel.getGuild(), musicManager, firstTrack, userId);
+        play(channel.getGuild(), channel.getId(), musicManager, firstTrack, userId);
       }
 
       @Override
@@ -92,8 +97,15 @@ public class MusicUtils {
     musicManager.player.stopTrack();
   }
 
-  public static void play(Guild guild, GuildMusicManager musicManager, AudioTrack track, String userId) {
+  public static void play(Guild guild, String channelId, GuildMusicManager musicManager, AudioTrack track,
+      String userId) {
     connectToChannel(guild.getAudioManager(), userId);
+
+    Date joinedDate = voiceScheduler.getChannel(channelId);
+
+    if (joinedDate == null) {
+      voiceScheduler.addChannel(channelId);
+    }
 
     musicManager.scheduler.queue(track);
   }

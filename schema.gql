@@ -1,0 +1,10 @@
+type message {
+	id: String
+	author: String
+	message: String
+	date: String
+}
+
+type Query {
+	message: message
+}
