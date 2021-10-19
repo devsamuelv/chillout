@@ -1,4 +1,6 @@
 target/
+Messages/
+*.watch
 runDev.sh
 .env
 *.log
