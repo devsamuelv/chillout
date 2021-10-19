@@ -62,7 +62,6 @@ public class Main extends ListenerAdapter {
                 Activity.of(ActivityType.STREAMING, "Don't worry youtube can't take me down"), false);
 
         Constants.bot.addEventListener(new Main());
-        Constants.bot.addEventListener(new Init());
 
         // initialize all the slash commands
         new slashCommands();
